@@ -18,88 +18,11 @@
 ## 2. Proposed Architecture
 
 ```mermaid
-graph TD
-    %% Node Definitions
-    WebApp["Web Application UI (React+TS+Vite+Tailwind+Framer Motion)"]
-    APIServer[API Server (Django)]
-    AuthService[Authentication Service (Google OAuth)]
-    TaskScheduler[Task Scheduler (Celery + Redis)]
-    Database[(PostgreSQL Database)]
-    AI_Module[AI Integration Module]
-    LangGraphAgent[LangGraph Agent (Multi-Iteration Refinement)]
-    Email_Module[Abstract Email Sending Module]
-    SendGrid_Impl[SendGrid Impl.]
-    Mailgun_Impl[Mailgun Impl.]
-    SES_Impl[AWS SES Impl.]
-    Gmail_OAuth_Impl[Gmail (OAuth) Impl.]
-    SMTP_Impl[SMTP Impl.]
-    Google_OAuth_API[Google OAuth API]
-    OpenAI_API[OpenAI API]
-    Gemini_API[Gemini API]
-    Anthropic_API[Anthropic API]
-    SendGrid_API[SendGrid API]
-    Mailgun_API[Mailgun API]
-    AWS_SES_API[AWS SES API]
-    Gmail_API[Gmail API]
-
-    %% Subgraph Grouping
-    subgraph User Facing
-        WebApp
-    end
-
-    subgraph Application Backend (Python/Django)
-        APIServer
-        AuthService
-        TaskScheduler
-        Database
-    end
-
-    subgraph Core Services
-        AI_Module
-        LangGraphAgent
-        Email_Module
-        SendGrid_Impl
-        Mailgun_Impl
-        SES_Impl
-        Gmail_OAuth_Impl
-        SMTP_Impl
-    end
-
-    subgraph External APIs
-        Google_OAuth_API
-        OpenAI_API
-        Gemini_API
-        Anthropic_API
-        SendGrid_API
-        Mailgun_API
-        AWS_SES_API
-        Gmail_API
-    end
-
-    %% Links
-    WebApp -- HTTP Requests --> APIServer;
-    WebApp -- OAuth Flow --> Google_OAuth_API;
-    APIServer -- Validates Token --> Google_OAuth_API;
-    APIServer -- User Mgmt --> AuthService;
-    AuthService -- CRUD Ops --> Database;
-    APIServer -- CRUD Ops --> Database;
-    APIServer -- Manage Jobs --> TaskScheduler;
-    APIServer -- Uses --> AI_Module;
-    APIServer -- Uses --> Email_Module;
-    TaskScheduler -- Triggers Job --> APIServer; // Job execution likely involves calling specific API endpoints or service functions
-    AI_Module --> LangGraphAgent;
-    Email_Module --> SendGrid_Impl;
-    Email_Module --> Mailgun_Impl;
-    Email_Module --> SES_Impl;
-    Email_Module --> Gmail_OAuth_Impl;
-    Email_Module --> SMTP_Impl;
-    LangGraphAgent -- API Calls --> OpenAI_API;
-    LangGraphAgent -- API Calls --> Gemini_API;
-    LangGraphAgent -- API Calls --> Anthropic_API;
-    SendGrid_Impl -- API Calls --> SendGrid_API;
-    Mailgun_Impl -- API Calls --> Mailgun_API;
-    SES_Impl -- API Calls --> AWS_SES_API;
-    Gmail_OAuth_Impl -- Uses User Token --> Gmail_API;
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
 ```
 
 ## 3. Technology Stack
