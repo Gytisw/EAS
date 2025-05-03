@@ -19,36 +19,39 @@
 
 ```mermaid
 graph TD
-    %% User Facing Components
-    WebApp["Web Application UI"]
-
-    %% Application Backend
-    APIServer["API Server (Django)"]
-    AuthService["Authentication Service"]
-    TaskScheduler["Task Scheduler"]
-    Database[("PostgreSQL Database")]
-
-    %% Core Services
-    AI_Module["AI Integration Module"]
-    LangGraphAgent["LangGraph Agent"]
-    Email_Module["Email Sending Module"]
-    SendGrid_Impl["SendGrid Impl."]
-    Mailgun_Impl["Mailgun Impl."]
-    SES_Impl["AWS SES Impl."]
-    Gmail_OAuth_Impl["Gmail OAuth Impl."]
-    SMTP_Impl["SMTP Impl."]
-
-    %% External APIs
-    Google_OAuth_API["Google OAuth API"]
-    OpenAI_API["OpenAI API"]
-    Gemini_API["Gemini API"]
-    Anthropic_API["Anthropic API"]
-    SendGrid_API["SendGrid API"]
-    Mailgun_API["Mailgun API"]
-    AWS_SES_API["AWS SES API"]
-    Gmail_API["Gmail API"]
-
-    %% Connections
+    subgraph "User Facing"
+        WebApp["Web Application UI"]
+    end
+    
+    subgraph "Application Backend"
+        APIServer["API Server (Django)"]
+        AuthService["Authentication Service"]
+        TaskScheduler["Task Scheduler"]
+        Database[("PostgreSQL Database")]
+    end
+    
+    subgraph "Core Services"
+        AI_Module["AI Integration Module"]
+        LangGraphAgent["LangGraph Agent"]
+        Email_Module["Email Sending Module"]
+        SendGrid_Impl["SendGrid Impl."]
+        Mailgun_Impl["Mailgun Impl."]
+        SES_Impl["AWS SES Impl."]
+        Gmail_OAuth_Impl["Gmail OAuth Impl."]
+        SMTP_Impl["SMTP Impl."]
+    end
+    
+    subgraph "External APIs"
+        Google_OAuth_API["Google OAuth API"]
+        OpenAI_API["OpenAI API"]
+        Gemini_API["Gemini API"]
+        Anthropic_API["Anthropic API"]
+        SendGrid_API["SendGrid API"]
+        Mailgun_API["Mailgun API"]
+        AWS_SES_API["AWS SES API"]
+        Gmail_API["Gmail API"]
+    end
+    
     WebApp --> APIServer
     WebApp --> Google_OAuth_API
     APIServer --> Google_OAuth_API
