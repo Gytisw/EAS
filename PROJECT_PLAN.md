@@ -15,7 +15,7 @@
 8.  **Secure Data Storage (PostgreSQL):** Persist user data, configurations, schedules, and encrypted credentials/tokens securely.
 9.  **Extensibility:** Design core modules (AI, Email) with abstractions to facilitate future addition of task types, AI models, or email providers.
 
-## 2. Proposed Architecture
+## 2. Proposed Architecture 
 
 ```mermaid
 graph TD
