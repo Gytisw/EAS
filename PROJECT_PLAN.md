@@ -23,14 +23,14 @@ graph TD
         WebApp["Web Application UI (React+TS+Vite+Tailwind+Framer Motion)"]
     end
 
-    subgraph Application Backend (Python/Django)
+    subgraph "Application Backend (Python/Django)"
         APIServer[API Server (Django)]
         AuthService[Authentication Service (Google OAuth)]
         TaskScheduler[Task Scheduler (Celery + Redis)]
         Database[(PostgreSQL Database)]
     end
 
-    subgraph Core Services
+    subgraph "Core Services"
         AI_Module[AI Integration Module] --> LangGraphAgent[LangGraph Agent (Multi-Iteration Refinement)]
         Email_Module[Abstract Email Sending Module] --> SendGrid_Impl[SendGrid Impl.]
         Email_Module --> Mailgun_Impl[Mailgun Impl.]
@@ -39,7 +39,7 @@ graph TD
         Email_Module --> SMTP_Impl[SMTP Impl.]
     end
 
-    subgraph External APIs
+    subgraph "External APIs"
         Google_OAuth_API[Google OAuth API]
         OpenAI_API[OpenAI API]
         Gemini_API[Gemini API]
