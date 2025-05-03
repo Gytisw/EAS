@@ -18,29 +18,33 @@
 ## 2. Proposed Architecture
 
 ```mermaid
-graph TD
+System Architecture
+Architecture Diagram
+mermaidgraph TD
+    %% Define nodes within their subgraphs
+
     subgraph "User Facing"
-        WebApp["Web Application UI"]
+        WebApp["Web Application UI (React+TS+Vite+Tailwind+Framer Motion)"]
     end
-    
-    subgraph "Application Backend"
+
+    subgraph "Application Backend (Python/Django)"
         APIServer["API Server (Django)"]
-        AuthService["Authentication Service"]
-        TaskScheduler["Task Scheduler"]
+        AuthService["Authentication Service (Google OAuth)"]
+        TaskScheduler["Task Scheduler (Celery + Redis)"]
         Database[("PostgreSQL Database")]
     end
-    
+
     subgraph "Core Services"
         AI_Module["AI Integration Module"]
-        LangGraphAgent["LangGraph Agent"]
-        Email_Module["Email Sending Module"]
+        LangGraphAgent["LangGraph Agent (Multi-Iteration Refinement)"]
+        Email_Module["Abstract Email Sending Module"]
         SendGrid_Impl["SendGrid Impl."]
         Mailgun_Impl["Mailgun Impl."]
         SES_Impl["AWS SES Impl."]
-        Gmail_OAuth_Impl["Gmail OAuth Impl."]
+        Gmail_OAuth_Impl["Gmail (OAuth) Impl."]
         SMTP_Impl["SMTP Impl."]
     end
-    
+
     subgraph "External APIs"
         Google_OAuth_API["Google OAuth API"]
         OpenAI_API["OpenAI API"]
@@ -51,30 +55,31 @@ graph TD
         AWS_SES_API["AWS SES API"]
         Gmail_API["Gmail API"]
     end
-    
-    WebApp --> APIServer
-    WebApp --> Google_OAuth_API
-    APIServer --> Google_OAuth_API
-    APIServer --> AuthService
-    AuthService --> Database
-    APIServer --> Database
-    APIServer --> TaskScheduler
-    APIServer --> AI_Module
-    APIServer --> Email_Module
-    TaskScheduler --> APIServer
+
+    %% Define connections
+    WebApp -- "HTTP Requests" --> APIServer
+    WebApp -- "OAuth Flow" --> Google_OAuth_API
+    APIServer -- "Validates Token" --> Google_OAuth_API
+    APIServer -- "User Mgmt" --> AuthService
+    AuthService -- "CRUD Ops" --> Database
+    APIServer -- "CRUD Ops" --> Database
+    APIServer -- "Manage Jobs" --> TaskScheduler
+    APIServer -- "Uses" --> AI_Module
+    APIServer -- "Uses" --> Email_Module
+    TaskScheduler -- "Triggers Job" --> APIServer
     AI_Module --> LangGraphAgent
     Email_Module --> SendGrid_Impl
     Email_Module --> Mailgun_Impl
     Email_Module --> SES_Impl
     Email_Module --> Gmail_OAuth_Impl
     Email_Module --> SMTP_Impl
-    LangGraphAgent --> OpenAI_API
-    LangGraphAgent --> Gemini_API
-    LangGraphAgent --> Anthropic_API
-    SendGrid_Impl --> SendGrid_API
-    Mailgun_Impl --> Mailgun_API
-    SES_Impl --> AWS_SES_API
-    Gmail_OAuth_Impl --> Gmail_API
+    LangGraphAgent -- "API Calls" --> OpenAI_API
+    LangGraphAgent -- "API Calls" --> Gemini_API
+    LangGraphAgent -- "API Calls" --> Anthropic_API
+    SendGrid_Impl -- "API Calls" --> SendGrid_API
+    Mailgun_Impl -- "API Calls" --> Mailgun_API
+    SES_Impl -- "API Calls" --> AWS_SES_API
+    Gmail_OAuth_Impl -- "Uses User Token" --> Gmail_API
     ```
 
 ## 3. Technology Stack
