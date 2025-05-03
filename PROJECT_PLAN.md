@@ -80,7 +80,7 @@ mermaidgraph TD
     Mailgun_Impl -- "API Calls" --> Mailgun_API
     SES_Impl -- "API Calls" --> AWS_SES_API
     Gmail_OAuth_Impl -- "Uses User Token" --> Gmail_API
-    ```
+```
 
 ## 3. Technology Stack
 
