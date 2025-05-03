@@ -20,7 +20,7 @@
 ```mermaid
 graph TD
     subgraph User Facing
-        WebApp[Web Application UI (React+TS+Vite+Tailwind+Framer Motion)]
+        WebApp["Web Application UI (React+TS+Vite+Tailwind+Framer Motion)"]
     end
 
     subgraph Application Backend (Python/Django)
