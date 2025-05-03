@@ -1,1 +1,1 @@
-# auto-prompt-generator
+# E-Mail Automation Service
