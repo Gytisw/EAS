@@ -19,66 +19,60 @@
 
 ```mermaid
 graph TD
-    %% Define nodes within their subgraphs
+    %% User Facing Components
+    WebApp["Web Application UI"]
 
-    subgraph User Facing
-        WebApp["Web Application UI (React+TS+Vite+Tailwind+Framer Motion)"];
-    end; %% Added semicolon
+    %% Application Backend
+    APIServer["API Server (Django)"]
+    AuthService["Authentication Service"]
+    TaskScheduler["Task Scheduler"]
+    Database[("PostgreSQL Database")]
 
-    subgraph Application Backend (Python/Django)
-        APIServer[API Server (Django)];
-        AuthService[Authentication Service (Google OAuth)];
-        TaskScheduler[Task Scheduler (Celery + Redis)];
-        Database[(PostgreSQL Database)];
-    end; %% Added semicolon
+    %% Core Services
+    AI_Module["AI Integration Module"]
+    LangGraphAgent["LangGraph Agent"]
+    Email_Module["Email Sending Module"]
+    SendGrid_Impl["SendGrid Impl."]
+    Mailgun_Impl["Mailgun Impl."]
+    SES_Impl["AWS SES Impl."]
+    Gmail_OAuth_Impl["Gmail OAuth Impl."]
+    SMTP_Impl["SMTP Impl."]
 
-    subgraph Core Services
-        AI_Module[AI Integration Module];
-        LangGraphAgent[LangGraph Agent (Multi-Iteration Refinement)];
-        Email_Module[Abstract Email Sending Module];
-        SendGrid_Impl[SendGrid Impl.];
-        Mailgun_Impl[Mailgun Impl.];
-        SES_Impl[AWS SES Impl.];
-        Gmail_OAuth_Impl[Gmail (OAuth) Impl.];
-        SMTP_Impl[SMTP Impl.];
-    end; %% Added semicolon
+    %% External APIs
+    Google_OAuth_API["Google OAuth API"]
+    OpenAI_API["OpenAI API"]
+    Gemini_API["Gemini API"]
+    Anthropic_API["Anthropic API"]
+    SendGrid_API["SendGrid API"]
+    Mailgun_API["Mailgun API"]
+    AWS_SES_API["AWS SES API"]
+    Gmail_API["Gmail API"]
 
-    subgraph External APIs
-        Google_OAuth_API[Google OAuth API];
-        OpenAI_API[OpenAI API];
-        Gemini_API[Gemini API];
-        Anthropic_API[Anthropic API];
-        SendGrid_API[SendGrid API];
-        Mailgun_API[Mailgun API];
-        AWS_SES_API[AWS SES API];
-        Gmail_API[Gmail API];
-    end; %% Added semicolon
-
-    %% Links (remain the same)
-    WebApp -- HTTP Requests --> APIServer;
-    WebApp -- OAuth Flow --> Google_OAuth_API;
-    APIServer -- Validates Token --> Google_OAuth_API;
-    APIServer -- User Mgmt --> AuthService;
-    AuthService -- CRUD Ops --> Database;
-    APIServer -- CRUD Ops --> Database;
-    APIServer -- Manage Jobs --> TaskScheduler;
-    APIServer -- Uses --> AI_Module;
-    APIServer -- Uses --> Email_Module;
-    TaskScheduler -- Triggers Job --> APIServer;
-    AI_Module --> LangGraphAgent;
-    Email_Module --> SendGrid_Impl;
-    Email_Module --> Mailgun_Impl;
-    Email_Module --> SES_Impl;
-    Email_Module --> Gmail_OAuth_Impl;
-    Email_Module --> SMTP_Impl;
-    LangGraphAgent -- API Calls --> OpenAI_API;
-    LangGraphAgent -- API Calls --> Gemini_API;
-    LangGraphAgent -- API Calls --> Anthropic_API;
-    SendGrid_Impl -- API Calls --> SendGrid_API;
-    Mailgun_Impl -- API Calls --> Mailgun_API;
-    SES_Impl -- API Calls --> AWS_SES_API;
-    Gmail_OAuth_Impl -- Uses User Token --> Gmail_API;
-```
+    %% Connections
+    WebApp --> APIServer
+    WebApp --> Google_OAuth_API
+    APIServer --> Google_OAuth_API
+    APIServer --> AuthService
+    AuthService --> Database
+    APIServer --> Database
+    APIServer --> TaskScheduler
+    APIServer --> AI_Module
+    APIServer --> Email_Module
+    TaskScheduler --> APIServer
+    AI_Module --> LangGraphAgent
+    Email_Module --> SendGrid_Impl
+    Email_Module --> Mailgun_Impl
+    Email_Module --> SES_Impl
+    Email_Module --> Gmail_OAuth_Impl
+    Email_Module --> SMTP_Impl
+    LangGraphAgent --> OpenAI_API
+    LangGraphAgent --> Gemini_API
+    LangGraphAgent --> Anthropic_API
+    SendGrid_Impl --> SendGrid_API
+    Mailgun_Impl --> Mailgun_API
+    SES_Impl --> AWS_SES_API
+    Gmail_OAuth_Impl --> Gmail_API
+    ```
 
 ## 3. Technology Stack
 
