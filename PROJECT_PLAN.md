@@ -20,27 +20,27 @@
 ```mermaid
 graph TD
     %% Node Definitions
-    WebApp["Web Application UI (React+TS+Vite+Tailwind+Framer Motion)"]
-    APIServer[API Server (Django)]
-    AuthService[Authentication Service (Google OAuth)]
-    TaskScheduler[Task Scheduler (Celery + Redis)]
-    Database[(PostgreSQL Database)]
-    AI_Module[AI Integration Module]
-    LangGraphAgent[LangGraph Agent (Multi-Iteration Refinement)]
-    Email_Module[Abstract Email Sending Module]
-    SendGrid_Impl[SendGrid Impl.]
-    Mailgun_Impl[Mailgun Impl.]
-    SES_Impl[AWS SES Impl.]
-    Gmail_OAuth_Impl[Gmail (OAuth) Impl.]
-    SMTP_Impl[SMTP Impl.]
-    Google_OAuth_API[Google OAuth API]
-    OpenAI_API[OpenAI API]
-    Gemini_API[Gemini API]
-    Anthropic_API[Anthropic API]
-    SendGrid_API[SendGrid API]
-    Mailgun_API[Mailgun API]
-    AWS_SES_API[AWS SES API]
-    Gmail_API[Gmail API]
+    WebApp["Web Application UI (React+TS+Vite+Tailwind+Framer Motion)"];
+    APIServer[API Server (Django)];
+    AuthService[Authentication Service (Google OAuth)];
+    TaskScheduler[Task Scheduler (Celery + Redis)];
+    Database[(PostgreSQL Database)];
+    AI_Module[AI Integration Module];
+    LangGraphAgent[LangGraph Agent (Multi-Iteration Refinement)];
+    Email_Module[Abstract Email Sending Module];
+    SendGrid_Impl[SendGrid Impl.];
+    Mailgun_Impl[Mailgun Impl.];
+    SES_Impl[AWS SES Impl.];
+    Gmail_OAuth_Impl[Gmail (OAuth) Impl.];
+    SMTP_Impl[SMTP Impl.];
+    Google_OAuth_API[Google OAuth API];
+    OpenAI_API[OpenAI API];
+    Gemini_API[Gemini API];
+    Anthropic_API[Anthropic API];
+    SendGrid_API[SendGrid API];
+    Mailgun_API[Mailgun API];
+    AWS_SES_API[AWS SES API];
+    Gmail_API[Gmail API];
 
     %% Subgraph Grouping
     subgraph User Facing
@@ -86,7 +86,7 @@ graph TD
     APIServer -- Manage Jobs --> TaskScheduler;
     APIServer -- Uses --> AI_Module;
     APIServer -- Uses --> Email_Module;
-    TaskScheduler -- Triggers Job --> APIServer; // Job execution likely involves calling specific API endpoints or service functions
+    TaskScheduler -- Triggers Job --> APIServer;
     AI_Module --> LangGraphAgent;
     Email_Module --> SendGrid_Impl;
     Email_Module --> Mailgun_Impl;
