@@ -18,9 +18,7 @@
 ## 2. Proposed Architecture
 
 ```mermaid
-System Architecture
-Architecture Diagram
-mermaidgraph TD
+graph TD
     %% Define nodes within their subgraphs
 
     subgraph "User Facing"
