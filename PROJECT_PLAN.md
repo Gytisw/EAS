@@ -23,14 +23,14 @@ graph TD
 
     subgraph User Facing
         WebApp["Web Application UI (React+TS+Vite+Tailwind+Framer Motion)"];
-    end
+    end; %% Added semicolon
 
     subgraph Application Backend (Python/Django)
         APIServer[API Server (Django)];
         AuthService[Authentication Service (Google OAuth)];
         TaskScheduler[Task Scheduler (Celery + Redis)];
         Database[(PostgreSQL Database)];
-    end
+    end; %% Added semicolon
 
     subgraph Core Services
         AI_Module[AI Integration Module];
@@ -41,7 +41,7 @@ graph TD
         SES_Impl[AWS SES Impl.];
         Gmail_OAuth_Impl[Gmail (OAuth) Impl.];
         SMTP_Impl[SMTP Impl.];
-    end
+    end; %% Added semicolon
 
     subgraph External APIs
         Google_OAuth_API[Google OAuth API];
@@ -52,7 +52,7 @@ graph TD
         Mailgun_API[Mailgun API];
         AWS_SES_API[AWS SES API];
         Gmail_API[Gmail API];
-    end
+    end; %% Added semicolon
 
     %% Links (remain the same)
     WebApp -- HTTP Requests --> APIServer;
