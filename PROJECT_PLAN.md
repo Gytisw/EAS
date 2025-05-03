@@ -19,64 +19,42 @@
 
 ```mermaid
 graph TD
-    %% Node Definitions
-    WebApp["Web Application UI (React+TS+Vite+Tailwind+Framer Motion)"];
-    APIServer[API Server (Django)];
-    AuthService[Authentication Service (Google OAuth)];
-    TaskScheduler[Task Scheduler (Celery + Redis)];
-    Database[(PostgreSQL Database)];
-    AI_Module[AI Integration Module];
-    LangGraphAgent[LangGraph Agent (Multi-Iteration Refinement)];
-    Email_Module[Abstract Email Sending Module];
-    SendGrid_Impl[SendGrid Impl.];
-    Mailgun_Impl[Mailgun Impl.];
-    SES_Impl[AWS SES Impl.];
-    Gmail_OAuth_Impl[Gmail (OAuth) Impl.];
-    SMTP_Impl[SMTP Impl.];
-    Google_OAuth_API[Google OAuth API];
-    OpenAI_API[OpenAI API];
-    Gemini_API[Gemini API];
-    Anthropic_API[Anthropic API];
-    SendGrid_API[SendGrid API];
-    Mailgun_API[Mailgun API];
-    AWS_SES_API[AWS SES API];
-    Gmail_API[Gmail API];
+    %% Define nodes within their subgraphs
 
-    %% Subgraph Grouping
     subgraph User Facing
-        WebApp
+        WebApp["Web Application UI (React+TS+Vite+Tailwind+Framer Motion)"];
     end
 
     subgraph Application Backend (Python/Django)
-        APIServer
-        AuthService
-        TaskScheduler
-        Database
+        APIServer[API Server (Django)];
+        AuthService[Authentication Service (Google OAuth)];
+        TaskScheduler[Task Scheduler (Celery + Redis)];
+        Database[(PostgreSQL Database)];
     end
 
     subgraph Core Services
-        AI_Module
-        LangGraphAgent
-        Email_Module
-        SendGrid_Impl
-        Mailgun_Impl
-        SES_Impl
-        Gmail_OAuth_Impl
-        SMTP_Impl
+        AI_Module[AI Integration Module];
+        LangGraphAgent[LangGraph Agent (Multi-Iteration Refinement)];
+        Email_Module[Abstract Email Sending Module];
+        SendGrid_Impl[SendGrid Impl.];
+        Mailgun_Impl[Mailgun Impl.];
+        SES_Impl[AWS SES Impl.];
+        Gmail_OAuth_Impl[Gmail (OAuth) Impl.];
+        SMTP_Impl[SMTP Impl.];
     end
 
     subgraph External APIs
-        Google_OAuth_API
-        OpenAI_API
-        Gemini_API
-        Anthropic_API
-        SendGrid_API
-        Mailgun_API
-        AWS_SES_API
-        Gmail_API
+        Google_OAuth_API[Google OAuth API];
+        OpenAI_API[OpenAI API];
+        Gemini_API[Gemini API];
+        Anthropic_API[Anthropic API];
+        SendGrid_API[SendGrid API];
+        Mailgun_API[Mailgun API];
+        AWS_SES_API[AWS SES API];
+        Gmail_API[Gmail API];
     end
 
-    %% Links
+    %% Links (remain the same)
     WebApp -- HTTP Requests --> APIServer;
     WebApp -- OAuth Flow --> Google_OAuth_API;
     APIServer -- Validates Token --> Google_OAuth_API;
