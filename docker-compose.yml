@@ -1,0 +1,117 @@
+# docker-compose.yml
+services:
+  db:
+    image: postgres:17.4-alpine # From TECH_STACK.md
+    container_name: eas_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_USER: ${SQL_USER:-eas_user}
+      POSTGRES_PASSWORD: ${SQL_PASSWORD:-eas_password}
+      POSTGRES_DB: ${SQL_DATABASE:-eas_db}
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:8.0.0-alpine # From TECH_STACK.md
+    container_name: eas_redis
+    ports:
+      - "6379:6379"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: eas_backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/app # Mounts the backend directory for live code changes
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=1
+      - PYTHONUNBUFFERED=1
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY:-your_default_development_secret_key_eas} # Provide a default for dev
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=${SQL_DATABASE:-eas_db}
+      - SQL_USER=${SQL_USER:-eas_user}
+      - SQL_PASSWORD=${SQL_PASSWORD:-eas_password}
+      - SQL_HOST=db
+      - SQL_PORT=5432
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/1
+      - FERNET_KEY_1=${FERNET_KEY_1}
+      - DJANGO_SETTINGS_MODULE=eas_backend.settings # Ensure settings are loaded
+    depends_on:
+      - db
+      - redis
+    # env_file:
+    #   - ./.env # We will create .env later
+
+  celery_beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: eas_celery_beat
+    command: celery -A eas_backend beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    volumes:
+      - ./backend:/app
+    environment:
+      - DEBUG=1
+      - PYTHONUNBUFFERED=1
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY:-your_default_development_secret_key_eas}
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=${SQL_DATABASE:-eas_db}
+      - SQL_USER=${SQL_USER:-eas_user}
+      - SQL_PASSWORD=${SQL_PASSWORD:-eas_password}
+      - SQL_HOST=db
+      - SQL_PORT=5432
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL:-redis://redis:6379/0}
+      - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND:-redis://redis:6379/1}
+      - FERNET_KEY_1=${FERNET_KEY_1}
+      - DJANGO_SETTINGS_MODULE=eas_backend.settings
+    depends_on:
+      - db
+      - redis
+      - backend # Ensure backend is up for DB access by DatabaseScheduler
+
+  celery_worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: eas_celery_worker
+    command: celery -A eas_backend worker -l INFO
+    volumes:
+      - ./backend:/app
+    environment:
+      - DEBUG=1
+      - PYTHONUNBUFFERED=1
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY:-your_default_development_secret_key_eas}
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=${SQL_DATABASE:-eas_db}
+      - SQL_USER=${SQL_USER:-eas_user}
+      - SQL_PASSWORD=${SQL_PASSWORD:-eas_password}
+      - SQL_HOST=db
+      - SQL_PORT=5432
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL:-redis://redis:6379/0}
+      - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND:-redis://redis:6379/1}
+      - FERNET_KEY_1=${FERNET_KEY_1}
+      - DJANGO_SETTINGS_MODULE=eas_backend.settings
+    depends_on:
+      - db
+      - redis
+      - backend # Ensures migrations run by backend are done before worker starts
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: eas_frontend
+    ports:
+      - "3000:80"
+    # If the frontend needs to wait for the backend to be ready, uncomment depends_on
+    # depends_on:
+    #   - backend
+
+volumes:
+  postgres_data:

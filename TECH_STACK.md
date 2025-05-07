@@ -28,12 +28,24 @@ This document outlines the primary technologies, frameworks, and libraries chose
 *   **Web Framework:** Django
     *   **Version:** `5.2`
     *   **Source:** [PyPI](https://pypi.org/project/Django/)
-*   **Authentication:** Google OAuth 2.0 via `django-allauth` (or similar)
-    *   **Version:** Latest stable compatible with Django 5.2
+*   **Authentication:** `django-allauth` (with `socialaccount`, `openid` extras)
+    *   **Version:** `65.7.0`
     *   **Source:** [PyPI](https://pypi.org/project/django-allauth/)
-*   **API Framework:** Django Rest Framework (Implicitly used with Django, typically)
-    *   **Version:** Latest stable compatible with Django 5.2
+*   **API Framework:** Django Rest Framework
+    *   **Version:** `3.16.0`
     *   **Source:** [PyPI](https://pypi.org/project/djangorestframework/)
+*   **API Authentication (Django Rest Framework):** `dj-rest-auth`
+    *   **Version:** `7.0.1`
+    *   **Source:** [PyPI](https://pypi.org/project/dj-rest-auth/)
+*   **JWT Support (Django Rest Framework):** `djangorestframework-simplejwt`
+    *   **Version:** `5.5.0`
+    *   **Source:** [PyPI](https://pypi.org/project/djangorestframework-simplejwt/)
+*   **Structured Logging:** `python-json-logger`
+    *   **Version:** `3.3.0`
+    *   **Source:** [PyPI](https://pypi.org/project/python-json-logger/)
+*   **Development Utilities:** `django-extensions`
+    *   **Version:** `4.1`
+    *   **Source:** [PyPI](https://pypi.org/project/django-extensions/)
 
 ## Database
 
@@ -42,6 +54,9 @@ This document outlines the primary technologies, frameworks, and libraries chose
     *   **Version:** `17.4` (Latest stable)
     *   **Source:** [PostgreSQL.org](https://www.postgresql.org/)
 *   **ORM:** Django ORM (Built-in)
+*   **Python Client (PostgreSQL):** `psycopg[binary]` (implicitly `psycopg3`)
+    *   **Version:** `3.2.7`
+    *   **Source:** [PyPI](https://pypi.org/project/psycopg/)
 
 ## Task Scheduling & Message Broker
 
@@ -51,6 +66,15 @@ This document outlines the primary technologies, frameworks, and libraries chose
 *   **Message Broker:** Redis
     *   **Version:** `8.0.0` (Latest GA)
     *   **Source:** [GitHub Releases](https://github.com/redis/redis/releases)
+*   **Redis Python Client:** `redis`
+    *   **Version:** `5.0.7` (pinned in `requirements.txt`)
+    *   **Source:** [PyPI](https://pypi.org/project/redis/)
+*   **Periodic Task Scheduler (Celery):** `django-celery-beat`
+    *   **Version:** `2.8.0`
+    *   **Source:** [PyPI](https://pypi.org/project/django-celery-beat/)
+*   **Cron Expression Parser:** `croniter`
+    *   **Version:** `6.0.0`
+    *   **Source:** [PyPI](https://pypi.org/project/croniter/)
 
 ## AI Integration
 
@@ -92,5 +116,6 @@ This document outlines the primary technologies, frameworks, and libraries chose
 
 *   **Dependency Scanning:** `safety` (Python), `npm audit` / Snyk (Node.js)
 *   **Secrets Management:** Environment Variables / Platform Secrets Manager (Initial), potentially HashiCorp Vault later.
-
-*Note: Specific versions for provider SDKs and libraries like `django-allauth` will be determined and pinned during the implementation phase based on compatibility with the core stack (Python 3.12, Django 5.2).*
+*   **Field Encryption:** `django-fernet-encrypted-fields`
+    *   **Version:** `0.3.0`
+    *   **Source:** [PyPI](https://pypi.org/project/django-fernet-encrypted-fields/)
